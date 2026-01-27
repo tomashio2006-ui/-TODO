@@ -1,79 +1,68 @@
-const taskInput = document.getElementById("taskInput");
-const setInput = document.getElementById("setInput");
-const addBtn = document.getElementById("addBtn");
-const list = document.getElementById("taskList");
-
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-function save() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+body {
+  font-family: sans-serif;
+  background: #f4f4f4;
+  padding: 20px;
+  max-width: 420px;
+  margin: auto;
 }
 
-function render() {
-  list.innerHTML = "";
-
-  tasks.forEach((task, index) => {
-    const li = document.createElement("li");
-
-    const title = document.createElement("strong");
-    title.textContent = `${task.text}（${task.sets.length}セット）`;
-    li.appendChild(title);
-
-    const setsDiv = document.createElement("div");
-    setsDiv.className = "sets";
-
-    task.sets.forEach((done, i) => {
-      const label = document.createElement("label");
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.checked = done;
-
-      checkbox.addEventListener("change", () => {
-        task.sets[i] = checkbox.checked;
-        task.done = task.sets.every(s => s);
-        save();
-        render();
-      });
-
-      label.appendChild(checkbox);
-      label.append(` セット ${i + 1}`);
-      setsDiv.appendChild(label);
-    });
-
-    li.appendChild(setsDiv);
-
-    if (task.done) li.classList.add("done");
-
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "削除";
-    delBtn.className = "delete";
-    delBtn.addEventListener("click", () => {
-      tasks.splice(index, 1);
-      save();
-      render();
-    });
-
-    li.appendChild(delBtn);
-    list.appendChild(li);
-  });
+h1 {
+  text-align: center;
 }
 
-addBtn.addEventListener("click", () => {
-  const text = taskInput.value;
-  const setCount = Number(setInput.value);
+.input-area {
+  display: flex;
+  gap: 5px;
+}
 
-  if (!text || setCount < 1) return;
+input {
+  padding: 8px;
+}
 
-  tasks.push({
-    text,
-    sets: Array(setCount).fill(false),
-    done: false
-  });
+button {
+  padding: 8px 12px;
+  cursor: pointer;
+}
 
-  taskInput.value = "";
-  setInput.value = "";
-  save();
-  render();
-});
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
 
-render();
+li {
+  background: white;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+li.done {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.sets {
+  margin-top: 10px;
+}
+
+.sets label {
+  display: block;
+}
+
+.delete {
+  margin-top: 8px;
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px;
+}
+#suggestBtn {
+  width: 100%;
+  margin-bottom: 10px;
+  background: #ff9800;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
