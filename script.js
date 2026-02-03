@@ -66,3 +66,18 @@ li.done {
   font-weight: bold;
   cursor: pointer;
 }
+.parts {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.parts button {
+  flex: 1;
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
