@@ -93,3 +93,30 @@ addBtn.addEventListener("click", () => {
 });
 
 render();
+const partButtons = document.querySelectorAll(".parts button");
+
+const workoutsByPart = {
+  legs: [
+    "スクワット 30回",
+    "ランジ 20回",
+    "カーフレイズ 30回"
+  ],
+  chest: [
+    "腕立て伏せ 20回",
+    "ナロープッシュアップ 15回"
+  ],
+  abs: [
+    "腹筋 20回",
+    "プランク 60秒",
+    "レッグレイズ 15回"
+  ]
+};
+
+partButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const part = btn.dataset.part;
+    const list = workoutsByPart[part];
+    const random = list[Math.floor(Math.random() * list.length)];
+    taskInput.value = random;
+  });
+});
